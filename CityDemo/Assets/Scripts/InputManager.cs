@@ -12,8 +12,8 @@ public class InputManager : MonoBehaviour
 
     [SerializeField]
     Camera mainCamera;
-    
 
+    public Vector3Int mPos;
     public Vector2 CameraMovementVector
     {
         get { return cameraMovementVector; }
@@ -25,11 +25,17 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        //Vector3Int? a = RaycastGround();
+        //if (a != null)
+        //    mPos = (Vector3Int)a;
+       
         CheckClickDownEvent();
         CheckClickUpEvent();
         CheckClickHoldEvent();
         CheckArrowInput();
     }
+
+
     private Vector3Int? RaycastGround() 
     {
         RaycastHit hit;

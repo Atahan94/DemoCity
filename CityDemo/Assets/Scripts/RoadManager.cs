@@ -11,21 +11,31 @@ public class RoadManager : MonoBehaviour
 
     public GameObject roadStraight;
 
+    public RoadFixer roadFixer;
+
+    private void Start()
+    {
+        roadFixer = GetComponent<RoadFixer>();
+    }
+
     public void PlaceRoad(Vector3Int position)
     {
         if (placementManager.CheckPositionInBound(position) == false)
-        {
-            Debug.Log("OutBound");
-            return;
-        }
-           
+            return;           
         if (placementManager.CheckPositionIsFree(position) == false)
-        {
             return;
-        }
-        
-
+        temporaryPlacementPosition.Clear();
+        temporaryPlacementPosition.Add(position);
         placementManager.PlaceTemporaryStructure(position, roadStraight, CellType.Road);
+        FixedRoadPrefab();
     }
 
+    private void FixedRoadPrefab()
+    {
+       foreach(var item in temporaryPlacementPosition)
+       {
+            
+            roadFixer.FixeRoadAtPosition(placementManager, item);
+       }
+    }
 }

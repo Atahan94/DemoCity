@@ -17,7 +17,7 @@ public class GameManger : MonoBehaviour
 
     private void HandleMouseClick(Vector3Int position)
     {
-        Debug.Log(position);
+        //Debug.Log($"X:{position.x}, Y:{position.y}, Z:{position.z}");
         roadManager.PlaceRoad(position);
     }
     private void Update()
