@@ -50,7 +50,7 @@ public class InputManager : MonoBehaviour
  
     private void CheckClickHoldEvent()
     {
-        if(Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false)
+        if(Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
         {
             var position = RaycastGround();
             if (position != null)

@@ -13,7 +13,9 @@ public class RoadFixer : MonoBehaviour
         var result = placemnetManager.GetNeighbourTypesFor(temporaryPosition);
         int roadCount = 0;
         roadCount = result.Where(x => x == CellType.Road).Count();
-        Debug.Log(result);
+
+       
+        
         if (roadCount == 0 || roadCount == 1) 
         {
             CreateDeadEnd(placemnetManager, result, temporaryPosition);
@@ -57,7 +59,7 @@ public class RoadFixer : MonoBehaviour
         }
         else if (result[0] == CellType.Road && result[1] == CellType.Road && result[2] == CellType.Road)
         {
-            placemnetManager.ModifyStructureModel(temporaryPosition, threeWay, Quaternion.Euler(0, 180, 0));
+            placemnetManager.ModifyStructureModel(temporaryPosition, threeWay, Quaternion.Euler(0, 270, 0));
         }
     }
 
@@ -92,7 +94,7 @@ public class RoadFixer : MonoBehaviour
         else if(result[1] == CellType.Road && result[3] == CellType.Road) 
         {
             placemnetManager.ModifyStructureModel(temporaryPosition, roadStraight, Quaternion.Euler(0,90,0));
-            return false;
+            return true;
         }
         return false;
     }

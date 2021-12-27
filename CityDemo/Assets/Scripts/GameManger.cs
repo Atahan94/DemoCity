@@ -10,16 +10,42 @@ public class GameManger : MonoBehaviour
     public RoadManager roadManager;
     public InputManager inputManger;
 
+    public UIController uiController;
+
     private void Start()
     {
-        inputManger.OnMouseClick += HandleMouseClick;
+        uiController.OnRoadPlacement += RoadPlacementHandler; 
+        uiController.OnRoadPlacement += HousePlacementHandler; 
+        uiController.OnSpecialPlacement += SpecialPlacementHandler;
+      
     }
 
-    private void HandleMouseClick(Vector3Int position)
+    private void SpecialPlacementHandler()
     {
-        //Debug.Log($"X:{position.x}, Y:{position.y}, Z:{position.z}");
-        roadManager.PlaceRoad(position);
+        throw new NotImplementedException();
     }
+
+    private void HousePlacementHandler()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void RoadPlacementHandler()
+    {
+        ClearInputActions();
+
+        inputManger.OnMouseClick += roadManager.PlaceRoad;
+        inputManger.OnMouseHold += roadManager.PlaceRoad;
+        inputManger.OnMouseUp += roadManager.FinishPlacingRoad;
+    }
+
+    private void ClearInputActions()
+    {
+        inputManger.OnMouseClick += null;
+        inputManger.OnMouseHold += null;
+        inputManger.OnMouseUp += null;
+    }
+
     private void Update()
     {
         camreMovement.MoveCamera(new Vector3(inputManger.CameraMovementVector.x, 0, inputManger.CameraMovementVector.y));
