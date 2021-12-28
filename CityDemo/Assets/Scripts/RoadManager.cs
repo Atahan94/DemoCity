@@ -69,7 +69,7 @@ public class RoadManager : MonoBehaviour
     {
        foreach(var item in temporaryPlacementPosition)
        {
-            Debug.Log($"F:{item}");
+            
             roadFixer.FixeRoadAtPosition(placementManager, item);
             var neighbours = placementManager.GetNeighbourOfTypesFor(item, CellType.Road);
             foreach (var roadPos in neighbours)

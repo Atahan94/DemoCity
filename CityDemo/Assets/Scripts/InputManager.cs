@@ -84,7 +84,7 @@ public class InputManager : MonoBehaviour
         {
             var position = RaycastGround();
             if (position != null)
-                OnMouseClick?.Invoke(position.Value);
+                OnMouseClick?.Invoke(position.Value);   
         }
     }
 }

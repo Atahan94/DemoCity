@@ -103,7 +103,7 @@ public class StructureManager : MonoBehaviour
             return false;
         }
 
-        if(RoadCheck(position)) 
+        if(RoadCheck(position) == false) 
         {
             return false;
         }
