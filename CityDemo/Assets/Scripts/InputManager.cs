@@ -13,7 +13,7 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     Camera mainCamera;
 
-    public Vector3Int mPos;
+    public Vector3Int? mPos;
     public Vector2 CameraMovementVector
     {
         get { return cameraMovementVector; }
@@ -25,16 +25,23 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        //Vector3Int? a = RaycastGround();
-        //if (a != null)
-        //    mPos = (Vector3Int)a;
-       
+        mPos = RaycastGround2();    
         CheckClickDownEvent();
         CheckClickUpEvent();
         CheckClickHoldEvent();
         CheckArrowInput();
     }
-
+    private Vector3Int? RaycastGround2()
+    {
+        RaycastHit hit;
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask))
+        {
+            Vector3Int positionInt = Vector3Int.RoundToInt(hit.point);
+            return positionInt;
+        }
+        return null;
+    }
 
     private Vector3Int? RaycastGround() 
     {

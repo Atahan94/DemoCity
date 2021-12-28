@@ -44,14 +44,42 @@ public class PlacemnetManager : MonoBehaviour
             }
         }
     }
-    internal CellType[] GetNeighbourTypesFor(Vector3Int position)
+
+    internal void PlaceObjectOnTheMap(Vector3Int position, GameObject structurePrefab, CellType type, int width = 1, int height = 1)
     {
-        CellType[] an = placementGrid.GetAllAdjacentCellTypes(position.x, position.z);
-        foreach (var item in placementGrid.GetAllAdjacentCellTypes(position.x, position.z))
+        StructureModel structure = CreateANewStructureModel(position, structurePrefab, type);
+        for (int x = 0; x < width; x++)
         {
-            Debug.Log($"Type:{item}" );
+            for (int y = 0; y < height; y++)
+            {
+                var newPosition = position + new Vector3Int(x, 0, y);
+
+                at[newPosition.x].am[newPosition.z] = type;//To Visualize
+
+                placementGrid[newPosition.x, newPosition.z] = type;
+                structureDic.Add(newPosition, structure);
+                DestroyNatureAt(newPosition);
+            }
+
         }
 
+    }
+
+    private void DestroyNatureAt(Vector3Int position)
+    {
+        RaycastHit[] hits = Physics.BoxCastAll(position + new Vector3(0, 0.5f, 0), new Vector3(0.5f, 0.5f, 0.5f), transform.up, Quaternion.identity, 1f, 1 << LayerMask.NameToLayer("Nature"));
+        foreach (var item in hits)
+        {
+            Destroy(item.collider.gameObject);
+        }
+    }
+
+    internal CellType[] GetNeighbourTypesFor(Vector3Int position)
+    {
+        //foreach (var item in placementGrid.GetAllAdjacentCellTypes(position.x, position.z))
+        //{
+        //    Debug.Log($"Type:{item}" );
+        //}
         return placementGrid.GetAllAdjacentCellTypes(position.x,position.z);
     }
 
@@ -80,6 +108,7 @@ public class PlacemnetManager : MonoBehaviour
         foreach (var structure in temporaryRoadObjects)
         {
             structureDic.Add(structure.Key, structure.Value);
+            DestroyNatureAt(structure.Key);
         }
         temporaryRoadObjects.Clear();
     }
